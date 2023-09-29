@@ -26,27 +26,27 @@ func NewHttpStreamUtil() *HttpStreamUtil {
 	return &HttpStreamUtil{&HttpStream{}}
 }
 
-func (hs *HttpStreamUtil) ResponseWriter(w http.ResponseWriter) *HttpStreamUtil {
+func (hs *HttpStreamUtil) SetResponseWriter(w http.ResponseWriter) *HttpStreamUtil {
 	hs.stream.w = w
 	return hs
 }
 
-func (hs *HttpStreamUtil) Request(r *http.Request) *HttpStreamUtil {
+func (hs *HttpStreamUtil) SetRequest(r *http.Request) *HttpStreamUtil {
 	hs.stream.r = r
 	return hs
 }
 
-func (hs *HttpStreamUtil) DataModel(data interface{}) *HttpStreamUtil {
+func (hs *HttpStreamUtil) SetDataModel(data interface{}) *HttpStreamUtil {
 	hs.stream.DataStruct = &data
 	return hs
 }
 
-func (hs *HttpStreamUtil) StatusCode(statusCode int) *HttpStreamUtil {
+func (hs *HttpStreamUtil) SetStatusCode(statusCode int) *HttpStreamUtil {
 	hs.stream.httpStatusCode = statusCode
 	return hs
 }
 
-func (hs *HttpStreamUtil) Payload(payload any) *HttpStreamUtil {
+func (hs *HttpStreamUtil) SetPayload(payload any) *HttpStreamUtil {
 	hs.stream.payload = &payload
 	return hs
 }
