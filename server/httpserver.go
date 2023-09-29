@@ -88,14 +88,15 @@ func (hsb *HttpServerBuilder) AddHandler(pattern string, httpMethod HttpMethod, 
 }
 
 func (hsb *HttpServerBuilder) AddHeartbeat() *HttpServerBuilder {
-	hsb.server.mux.Use(middleware.Heartbeat("/heartbeat"))
+	hsb.server.mux.Use(middleware.Heartbeat("/"))
 	return hsb
 }
 
 func (hsb *HttpServerBuilder) Start() {
 	ctx, cancel := context.WithCancel(context.Background())
 	svr := http.Server{
-		Addr: fmt.Sprintf(":%d", hsb.server.servicePort),
+		Addr:    fmt.Sprintf(":%d", hsb.server.servicePort),
+		Handler: hsb.server.mux,
 	}
 
 	go func() {
@@ -105,7 +106,7 @@ func (hsb *HttpServerBuilder) Start() {
 	}()
 
 	go func() {
-		fmt.Fprint(os.Stdout, "service started. press any key to quit...")
+		fmt.Fprint(os.Stdout, "service started. press any key to quit...\n")
 		var s string
 		fmt.Scanln(&s)
 		svr.Shutdown(ctx)
